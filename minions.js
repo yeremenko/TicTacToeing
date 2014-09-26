@@ -47,7 +47,7 @@
 
 	var initGame = function () {
 		whosTurnIsIt(turnNumber);
-		// alert(whosTurn);
+		console.log(grid);
 	};
 
 	initGame();
