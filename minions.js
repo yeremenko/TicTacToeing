@@ -9,6 +9,7 @@
 		turnNumber = 1,
 		whosTurn,
 		$whosTurn = $('#whos-turn'),
+		$clickPosition = $('#click-position'),
 		empty = null;
 
 	var whosTurnIsIt = function () {
@@ -24,13 +25,29 @@
 		$whosTurn.html(whosTurn);
 	};
 
+	var $square = $(".square");
+
+	$square.on("click" , function () {
+		var clickPosition = (this.getAttribute("data-board-position"));
+		$clickPosition.text(clickPosition);
+		if (grid[clickPosition] !== null) {
+			alert('taken!');
+			return;
+		} else {
+			grid[clickPosition] = whosTurn;
+		}
+		console.log(grid);
+		checkForWinner();
+		whosTurnIsIt();
+	});
+
 	var checkForWinner = function () {
 
 	};
 
 	var initGame = function () {
 		whosTurnIsIt(turnNumber);
-		alert(whosTurn);
+		// alert(whosTurn);
 	};
 
 	initGame();
