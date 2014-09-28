@@ -12,7 +12,8 @@
 		$whosTurn = $('#whos-turn'),
 		$square = $(".square"),
 		$clickPosition = $('#click-position'),
-	    $gameOutcome  = $('#game-outcome');
+	    $gameOutcome  = $('#game-outcome'),
+	    hasWinner = false;
 
 	var whosTurnIsIt = function () {
 		$turnNumber.html(turnNumber);
@@ -30,7 +31,7 @@
 		var clickPosition = (this.getAttribute("data-board-position"));
 		$clickPosition.text(clickPosition);
 
-		if (grid[clickPosition] !== null) {
+		if (grid[clickPosition] !== null || hasWinner == true) {
 			return;
 		} else {	
 			grid[clickPosition] = whosTurn;
@@ -59,6 +60,7 @@
 		    (grid[2]==grid[4] && grid[4]==grid[6] && grid[6] !== null))
 		{
 			$gameOutcome.text(whosTurn + ' ' + 'WINS!');
+			hasWinner = true;
 			resetGame();
 		} else if (turnNumber == 9) {
 			$gameOutcome.text('Draw!');
@@ -72,7 +74,7 @@
 		$reset = $('#reset');
 		$reset.show();
 		$reset.on('click' , function () {
-			
+			location.reload();
 		});
 	};
 
