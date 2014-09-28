@@ -22,8 +22,8 @@
 			color: #ffffff;
 		}
 		#board {
-			width: 300px;
-			height: 300px;
+			width: 302px;
+			height: 302px;
 			margin: 100px auto 40px;
 			-webkit-border-radius: 3px;
 			   -moz-border-radius: 3px;
@@ -36,7 +36,7 @@
 			font-size: 5em;
 			width: 100px;
 			height: 100px;
-			background-color: #34363d;
+			/*background-color: #34363d;*/
 			float: left;
 			text-align: center;
 		}
@@ -54,25 +54,48 @@
 		.specs-title {
 			color: #666;
 		}
+		#reset {
+			text-align: right;
+			display: none;
+			cursor: hand;
+			cursor: pointer;
+		}
+		.square-tl,
+		.square-tm,
+		.square-tr,
+		.square-ml,
+		.square-mm,
+		.square-mr {
+			border-bottom: 1px solid #34363d;
+		}
+		.square-tl,
+		.square-tm,
+		.square-ml,
+		.square-mm,
+		.square-bl,
+		.square-bm {
+			border-right: 1px solid #34363d;
+		}
 	</style>
 </head>
 <body>
 	<div id="board">
-		<p class="square" data-board-position="0"></p>
-		<p class="square" data-board-position="1"></p>
-		<p class="square" data-board-position="2"></p>
-		<p class="square" data-board-position="3"></p>
-		<p class="square" data-board-position="4"></p>
-		<p class="square" data-board-position="5"></p>
-		<p class="square" data-board-position="6"></p>
-		<p class="square" data-board-position="7"></p>
-		<p class="square" data-board-position="8"></p>
+		<p class="square square-tl" data-board-position="0"></p>
+		<p class="square square-tm" data-board-position="1"></p>
+		<p class="square square-tr" data-board-position="2"></p>
+		<p class="square square-ml" data-board-position="3"></p>
+		<p class="square square-mm" data-board-position="4"></p>
+		<p class="square square-mr" data-board-position="5"></p>
+		<p class="square square-bl" data-board-position="6"></p>
+		<p class="square square-bm" data-board-position="7"></p>
+		<p class="square square-br" data-board-position="8"></p>
 	</div>
 	<div id="specs">
 		<p><span class="specs-title">Turn:</span>&nbsp;<span id="whos-turn"></span></p>
 		<p><span class="specs-title">Turn Number:</span>&nbsp;<span id="turn-number"></span></p>
 		<p><span class="specs-title">Click Position:</span>&nbsp;<span id="click-position">None</span></p>
 		<p><span class="specs-title">Outcome:</span>&nbsp;<span id="game-outcome">Unknown</span></p>
+		<p id="reset">Reset</p>
 	</div>
 
 	<!-- JS -->

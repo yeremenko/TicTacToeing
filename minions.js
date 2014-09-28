@@ -10,32 +10,27 @@
 		$turnNumber = $('#turn-number'),
 		whosTurn,
 		$whosTurn = $('#whos-turn'),
+		$square = $(".square"),
 		$clickPosition = $('#click-position'),
-		empty = null;
+	    $gameOutcome  = $('#game-outcome');
 
 	var whosTurnIsIt = function () {
 		$turnNumber.html(turnNumber);
 
 		// X goes if turnNumber is ODD, else O goes
 		if (turnNumber % 2) {
-			console.log('turnNumber' + '' , turnNumber , 'ODD');
-			turnNumber ++;
 			whosTurn = x;
 		} else {
-			console.log('turnNumber' + '' , turnNumber , 'EVEN');
-			turnNumber ++;
 			whosTurn = o;
 		}
 		$whosTurn.html(whosTurn);
 	};
 
-	var $square = $(".square");
-
 	$square.on("click" , function () {
 		var clickPosition = (this.getAttribute("data-board-position"));
 		$clickPosition.text(clickPosition);
+
 		if (grid[clickPosition] !== null) {
-			console.log('taken!');
 			return;
 		} else {	
 			grid[clickPosition] = whosTurn;
@@ -45,24 +40,44 @@
 			} else if (whosTurn == o) {
 				$(this).addClass('o-color');
 			}
-			console.log(grid);
-			checkForWinner();
-			whosTurnIsIt();
 		}
+
+		checkForWinner();		
+		whosTurnIsIt();
 	});
 
 	var checkForWinner = function () {
-		var $gameOutcome = $('#game-outcome');
-		if (turnNumber > 9) {
-			$gameOutcome.text('Draw!');
-		} else {
+		if  ((grid[0]==grid[1] && grid[1]==grid[2] && grid[2] !== null) ||
+		    (grid[3]==grid[4] && grid[4]==grid[5] && grid[5] !== null) ||
+		    (grid[6]==grid[7] && grid[7]==grid[8] && grid[8] !== null) ||
 
+		    (grid[0]==grid[3] && grid[3]==grid[6] && grid[6] !== null) ||
+		    (grid[1]==grid[4] && grid[4]==grid[7] && grid[7] !== null) ||
+		    (grid[2]==grid[5] && grid[5]==grid[8] && grid[8] !== null) ||
+
+		    (grid[0]==grid[4] && grid[4]==grid[8] && grid[8] !== null) ||
+		    (grid[2]==grid[4] && grid[4]==grid[6] && grid[6] !== null))
+		{
+			$gameOutcome.text(whosTurn + ' ' + 'WINS!');
+			resetGame();
+		} else if (turnNumber == 9) {
+			$gameOutcome.text('Draw!');
 		}
+
+		turnNumber++;
+	};
+
+	//Reset Default Values
+	var resetGame = function () {
+		$reset = $('#reset');
+		$reset.show();
+		$reset.on('click' , function () {
+			
+		});
 	};
 
 	var initGame = function () {
-		whosTurnIsIt(turnNumber);
-		console.log(grid);
+		whosTurnIsIt();
 	};
 
 	initGame();
