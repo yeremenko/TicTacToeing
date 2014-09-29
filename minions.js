@@ -43,25 +43,31 @@
 			}
 		}
 
-		checkForWinner();		
+		checkForWinner();
 		whosTurnIsIt();
 	});
 
+	//
 	var checkForWinner = function () {
-		if  ((grid[0]==grid[1] && grid[1]==grid[2] && grid[2] !== null) ||
-		    (grid[3]==grid[4] && grid[4]==grid[5] && grid[5] !== null) ||
-		    (grid[6]==grid[7] && grid[7]==grid[8] && grid[8] !== null) ||
+		//start checking for winner after 4 moves
+		if (turnNumber > 4) {
+			console.log('checking...')
+			if  ((grid[0]==grid[1] && grid[1]==grid[2] && grid[2] !== null) ||
+			    (grid[3]==grid[4] && grid[4]==grid[5] && grid[5] !== null) ||
+			    (grid[6]==grid[7] && grid[7]==grid[8] && grid[8] !== null) ||
 
-		    (grid[0]==grid[3] && grid[3]==grid[6] && grid[6] !== null) ||
-		    (grid[1]==grid[4] && grid[4]==grid[7] && grid[7] !== null) ||
-		    (grid[2]==grid[5] && grid[5]==grid[8] && grid[8] !== null) ||
+			    (grid[0]==grid[3] && grid[3]==grid[6] && grid[6] !== null) ||
+			    (grid[1]==grid[4] && grid[4]==grid[7] && grid[7] !== null) ||
+			    (grid[2]==grid[5] && grid[5]==grid[8] && grid[8] !== null) ||
 
-		    (grid[0]==grid[4] && grid[4]==grid[8] && grid[8] !== null) ||
-		    (grid[2]==grid[4] && grid[4]==grid[6] && grid[6] !== null))
-		{
-			$gameOutcome.text(whosTurn + ' ' + 'WINS!');
-			hasWinner = true;
-			resetGame();
+			    (grid[0]==grid[4] && grid[4]==grid[8] && grid[8] !== null) ||
+			    (grid[2]==grid[4] && grid[4]==grid[6] && grid[6] !== null))
+			{
+				$gameOutcome.text(whosTurn + ' ' + 'WINS!');
+				hasWinner = true;
+				resetGame();
+			}
+		//must be a draw after 9 moves
 		} else if (turnNumber == 9) {
 			$gameOutcome.text('Draw!');
 		}
@@ -69,7 +75,7 @@
 		turnNumber++;
 	};
 
-	//Reset Default Values
+	//reset game by refreshing page
 	var resetGame = function () {
 		$reset = $('#reset');
 		$reset.show();
