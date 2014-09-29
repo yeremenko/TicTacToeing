@@ -51,7 +51,6 @@
 	var checkForWinner = function () {
 		//start checking for winner after 4 moves
 		if (turnNumber > 4) {
-			console.log('checking...')
 			if  ((grid[0]==grid[1] && grid[1]==grid[2] && grid[2] !== null) ||
 			    (grid[3]==grid[4] && grid[4]==grid[5] && grid[5] !== null) ||
 			    (grid[6]==grid[7] && grid[7]==grid[8] && grid[8] !== null) ||
