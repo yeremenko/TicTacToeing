@@ -1,22 +1,33 @@
 (function () {
-	var grid  = [
-		null, null, null,
-		null, null, null,
-		null, null, null
-		],
+	var grid,
 		x     = 'x',
 		o     = 'o',
-		turnNumber = 1,
-		$turnNumber = $('#turn-number'),
+		turnNumber,
 		whosTurn,
+		hasWinner,
+		$turnNumber = $('#turn-number'),
 		$whosTurn = $('#whos-turn'),
 		$square = $(".square"),
 		$clickPosition = $('#click-position'),
-	    $gameOutcome  = $('#game-outcome'),
-	    hasWinner = false;
+	    $gameOutcome  = $('#game-outcome');
+
+	// Default values
+    var newGame = function () {
+    	grid  = [ null, null, null,
+				  null, null, null,
+				  null, null, null
+				],
+		hasWinner = false,
+		$square.text(''),
+		$square.removeClass('x-color'),
+		$square.removeClass('o-color'),
+		turnNumber = 1,
+		$turnNumber.html(turnNumber),
+		$whosTurn.html(whosTurn),
+		$gameOutcome.html('Unknown');
+    };
 
 	var whosTurnIsIt = function () {
-		$turnNumber.html(turnNumber);
 
 		// X goes if turnNumber is ODD, else O goes
 		if (turnNumber % 2) {
@@ -24,7 +35,6 @@
 		} else {
 			whosTurn = o;
 		}
-		$whosTurn.html(whosTurn);
 	};
 
 	$square.on("click" , function () {
@@ -42,48 +52,63 @@
 				$(this).addClass('o-color');
 			}
 		}
+		console.log(turnNumber);
 
 		checkForWinner();
 		whosTurnIsIt();
 	});
 
+	/* WINNING BOARDS
+	
+		0 -- 0 1 2 
+		1 -- 3 4 5 
+		2 -- 6 7 8 
+		   / | | | \
+		3    4 5 6  7	  
+	*/
+
+	var winningRows = [
+		[0,1,2],
+		[3,4,5],
+		[6,7,8],
+		[2,4,6],
+		[0,3,6],
+		[1,4,7],
+		[2,5,8],
+		[0,4,8]
+	];
+
 	//
 	var checkForWinner = function () {
-		//start checking for winner after 4 moves
-		if (turnNumber > 4) {
-			if  ((grid[0]==grid[1] && grid[1]==grid[2] && grid[2] !== null) ||
-			    (grid[3]==grid[4] && grid[4]==grid[5] && grid[5] !== null) ||
-			    (grid[6]==grid[7] && grid[7]==grid[8] && grid[8] !== null) ||
-
-			    (grid[0]==grid[3] && grid[3]==grid[6] && grid[6] !== null) ||
-			    (grid[1]==grid[4] && grid[4]==grid[7] && grid[7] !== null) ||
-			    (grid[2]==grid[5] && grid[5]==grid[8] && grid[8] !== null) ||
-
-			    (grid[0]==grid[4] && grid[4]==grid[8] && grid[8] !== null) ||
-			    (grid[2]==grid[4] && grid[4]==grid[6] && grid[6] !== null))
-			{
+		// If there are no squares with 'null' then its a draw
+		if (grid.indexOf(null) == -1) {
+			$gameOutcome.text('Draw!');
+		};
+		//checks if rows have winning patterns
+		for(i=0; i < winningRows.length; i++){
+			possiblity = winningRows[i];
+			if (grid[possiblity[0]] != null && grid[possiblity[0]] == grid[possiblity[1]] && grid[possiblity[1]] == grid[possiblity[2]]) {
 				$gameOutcome.text(whosTurn + ' ' + 'WINS!');
 				hasWinner = true;
 				resetGame();
 			}
-		//must be a draw after 9 moves
-		} else if (turnNumber == 9) {
-			$gameOutcome.text('Draw!');
-		}
+		};
 
 		turnNumber++;
+		$turnNumber.html(turnNumber);
 	};
 
-	//reset game by refreshing page
+	//reset game by re-initializing starts
 	var resetGame = function () {
 		$reset = $('#reset');
 		$reset.show();
 		$reset.on('click' , function () {
-			location.reload();
+			initGame();
 		});
 	};
 
 	var initGame = function () {
+		newGame();
 		whosTurnIsIt();
 	};
 
