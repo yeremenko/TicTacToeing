@@ -27,8 +27,8 @@
 		$gameOutcome.html('Unknown');
     };
 
+    //toggle X and O
 	var whosTurnIsIt = function () {
-
 		// X goes if turnNumber is ODD, else O goes
 		if (turnNumber % 2) {
 			whosTurn = x;
@@ -52,7 +52,6 @@
 				$(this).addClass('o-color');
 			}
 		}
-		console.log(turnNumber);
 
 		checkForWinner();
 		whosTurnIsIt();
@@ -78,11 +77,11 @@
 		[0,4,8]
 	];
 
-	//
 	var checkForWinner = function () {
 		// If there are no squares with 'null' then its a draw
 		if (grid.indexOf(null) == -1) {
 			$gameOutcome.text('Draw!');
+			resetGame();
 		};
 		//checks if rows have winning patterns
 		for(i=0; i < winningRows.length; i++){
@@ -107,6 +106,7 @@
 		});
 	};
 
+	//start game
 	var initGame = function () {
 		newGame();
 		whosTurnIsIt();
